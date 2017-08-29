@@ -1,0 +1,24 @@
+{
+  "name": "admideasystem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ooooldwuuuu/ADproject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ooooldwuuuu/ADproject/issues"
+  },
+  "homepage": "https://github.com/ooooldwuuuu/ADproject#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.4",
+    "marko": "^4.4.26"
+  }
+}

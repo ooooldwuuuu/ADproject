@@ -1,0 +1,147 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+*::-webkit-input-placeholder {
+  color: #aeafb1;
+}
+*:-moz-placeholder {
+  color: #aeafb1;
+}
+*::-moz-placeholder {
+  color: #aeafb1;
+}
+*:-ms-input-placeholder {
+  color: #aeafb1;
+}
+
+body{
+  font-family: "Helvetica", "Arial", sans-serif;
+  line-height: 1.3;
+  background-color: #FFFFFF;
+}
+
+a:link,
+a:visited {
+  color: #aeafb1;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.logo {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  height: 60px;
+  z-index: 1000;
+}
+
+.mainbody {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.loginform {
+  height: 30%;
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  font-size: 16px;
+}
+
+.inputbox {
+  width: 80%;
+  height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.inputbox input{
+  height: 100%;
+/*  padding-top: 5px;*/
+  padding-left: 5px;
+  margin-bottom: 10px;
+  border: none;
+  border-bottom: 1px solid #252627;
+  border-radius: 3px 3px 0 0;
+  color: #5d6063;
+  font-size: 16px;
+}
+
+.buttonbox {
+  width: 80%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.buttonbox button{
+  width: 100%;
+  padding: 5px;
+  background-color: #5995DA;
+  border: none;
+  border-bottom: 2px solid #FFFFFF;
+  border-radius: 3px;
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: bold;
+  
+  cursor: pointer;
+}
+
+.buttonbox button:hover {
+  background-color: #76AEED;
+}
+
+.buttonbox button:active {
+  background-color: #407FC7;
+}
+
+.forget {
+  font-size: 12px;
+}
+
+@media only screen and (min-width: 700px) {
+  /* 當螢幕寬度大於 700px 時的規則 */
+  .loginform {
+    height: 50%;
+    width: 50%;
+  }
+  
+  .inputbox {
+/*    margin-bottom: 40px; */
+/*    height: 70%;*/
+  }
+  
+  .inputbox input{
+    height:50%;
+/*    margin-bottom: 30px;*/
+    padding-top: 40px;
+  }
+  
+  .buttonbox {
+    flex-direction: row;
+  }
+  
+  .buttonbox button{
+    padding: 10px;
+    margin-right: 1px; 
+    font-size: 16px;
+  }
+}
+
