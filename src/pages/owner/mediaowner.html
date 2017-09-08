@@ -4,12 +4,35 @@
         <meta charset="utf-8">
         <link rel="stylesheet" href="styles.css">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="mediaowner.js"></script>
         <title>Media Owner</title>
     </head>
     <body>
+        <!-- Popup Div Starts Here -->
+        <div id="popupContainer" class="popupContainer">
+            <div id="popupContact" class="popupContact">
+                <!-- Contact Us Form -->
+                <form action="" id="form" class="popForm" method="post" name="form" >
+                    <i id="closeBtn" onclick ="hideForm()" class="closeBtn fa fa-times-circle"></i>
+                    <div class="formHead">
+                        Add media info
+                    </div>
+                    <div class="formBody">
+                        <input id="name" name="name" placeholder="&#xf007; Name" type="text">
+                        <input id="address" name="address" placeholder="&#xf015; Address" type="text">
+                        <button id="submitBtn" name="submitBtn" onclick="checkFieldEmpty()">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Popup Div Ends Here -->
+        <div class="identity_container">
+            <h1>Media Owner</h1>
+            <i id="logout" class="fa fa-sign-out" >Log out</i>
+        </div>
         <div class="table_container">
-            <span class="fa-plus-circle"></span>
-            <table>
+            <i class="fa fa-plus-circle" onclick="showForm()"></i>
+            <table id="mediaTable">
                 <tr>
                     <th>編號</th>
                     <th>名稱</th>

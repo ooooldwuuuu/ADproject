@@ -93,7 +93,7 @@ a:hover {
 .buttonbox button{
   width: 100%;
   padding: 5px;
-  background-color: #5995DA;
+  background-color: #56a8fc;
   border: none;
   border-bottom: 2px solid #FFFFFF;
   border-radius: 3px;
@@ -102,14 +102,15 @@ a:hover {
   font-weight: bold;
   
   cursor: pointer;
+  transition: 0.5s ease-in-out;
 }
 
 .buttonbox button:hover {
-  background-color: #76AEED;
+  background-color: #a0e1ee;
 }
 
 .buttonbox button:active {
-  background-color: #407FC7;
+  background-color: #50bae8;
 }
 
 .forget {
