@@ -76,7 +76,7 @@ app.get('/src/pages/owner/mediaowner.js', function(req, res){
     res.sendFile('src/pages/owner/mediaowner.js', {root: __dirname });
 });
 
-app.post('/src/pages/owner', function(req, res){
+app.post('/src/pages/owner/', function(req, res){
     let identity = req.body.identity;
     console.log(req.body);
     //console.log(req.query);

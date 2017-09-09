@@ -12,7 +12,7 @@
         <div id="popupContainer" class="popupContainer">
             <div id="popupContact" class="popupContact">
                 <!-- Contact Us Form -->
-                <form action="" id="form" class="popForm" method="post" name="form" >
+                <div id="form" class="popForm">
                     <i id="closeBtn" onclick ="hideForm()" class="closeBtn fa fa-times-circle"></i>
                     <div class="formHead">
                         Add media info
@@ -20,9 +20,9 @@
                     <div class="formBody">
                         <input id="name" name="name" placeholder="&#xf007; Name" type="text">
                         <input id="address" name="address" placeholder="&#xf015; Address" type="text">
-                        <button id="submitBtn" name="submitBtn" onclick="checkFieldEmpty()">Submit</button>
+                        <input id="submitBtn" name="submitBtn" onclick="checkFieldEmpty()" type="button" value="Submit">
                     </div>
-                </form>
+                </div>
             </div>
         </div>
         <!-- Popup Div Ends Here -->
@@ -41,14 +41,14 @@
                     <th>單價</th>
                     <th>收入</th>
                 </tr>
-                <tr>
+                <!-- <tr>
                     <td>編號</td>
                     <td>名稱</td>
                     <td>地點</td>
                     <td>本月時數</td>
                     <td>單價</td>
                     <td>收入</td>
-                </tr>
+                </tr> -->
             </table>
         </div>
     </body>
