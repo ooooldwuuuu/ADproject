@@ -197,3 +197,25 @@ tr:nth-child(even){background-color: #f2f2f2}
     background-color: #ffc219;
     transform: scale(1.03);
 }
+
+#popVideoContainer {
+    display: none;
+}
+#playlist {
+    display:table;
+}
+#playlist li{
+    cursor:pointer;
+    padding:8px;
+}
+
+#playlist li:hover{
+    color:blue;                        
+}
+#videoarea {
+    float:left;
+    width:640px;
+    height:480px;
+    margin:10px;    
+    border:1px solid silver;
+}

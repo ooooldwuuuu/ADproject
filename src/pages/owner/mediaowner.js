@@ -53,5 +53,6 @@ function clearFormContent(){
 }
 
 function showVideoFrame(){
+    document.getElementById('popVideoContainer').style.display = "flex";
     alert('Hi');
 }
