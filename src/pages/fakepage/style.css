@@ -1,0 +1,161 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.navigator-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 30px;
+}
+.navigator-menu{
+    display: flex;
+    justify-content: flex-start;
+}
+.navigator-menu > ul{
+    margin-top: 5px;
+}
+.navigator-menu > ul li{
+    display: inline;
+    padding-left: 30px;
+    cursor: pointer;
+}
+.navigator-menu > ul li:hover{
+    color: #666666;
+}
+
+.content-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.content-welcome{
+    position: relative;
+    width: 100%;
+    height: 400px;
+    background-color: #e5e5e5;
+}
+.content-welcome > img{
+    position: absolute;
+    top: 50px;
+    left: 200px;
+    max-width: 200px;
+    max-height: 300px;
+}
+.greeting-container{
+    position: absolute;
+    top: 50px;
+    left: 550px;
+}
+
+.greeting-container > .p1{
+    max-width: 550px;
+    word-break: normal;
+    font-size: 3em;
+    color: #5889a6;
+    margin-bottom: 30px;
+}
+
+.greeting-container > .p2{
+    max-width: 550px;
+    word-break: normal;
+    font-size: 1.6em;
+    color: #4c4c4c;
+}
+
+.content-div{
+    width: 100%;
+    height: 400px;
+}
+.div-1{
+    background-color: #cee2ed;
+}
+.div-2{
+    background-color: #dceaf2;
+}
+
+
+.form-container{
+    width: 100%;
+    background-color: #fafcfd;
+    display: flex;
+    justify-content: center;
+    border-bottom: 0.5px solid #939596;
+}
+.comment-form{
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 50px;
+}
+.comment-form > h1{
+    margin-bottom: 30px;
+}
+.comment-form > p{
+    max-width: 400px;
+    text-align: center;
+    word-break: normal;
+    margin-bottom: 70px;
+}
+.comment-form > label{
+    margin-bottom: 10px;
+}
+.comment-form > input{
+    width: 450px;
+    height: 50px;
+    margin-bottom: 30px;
+    border: 0.5px solid #e9eaee;
+    border-radius: 5px;
+}
+.comment-form > textarea{
+    width: 450px;
+    margin-bottom: 70px;
+    border: 0.5px solid #e9eaee;
+    border-radius: 5px;
+}
+
+.comment-form > input[type="button"]{
+    width: 200px;
+    font-size: 1.1em;
+    color: white;
+    background-color: #5889a6;
+    cursor: pointer;
+}
+.comment-form > input[type="button"]:hover{
+    background-color: #4f7b95;
+}
+
+.footer-container{
+    width: 100%;
+    background-color: #eef3f6;
+    display: flex;
+    justify-content: space-around;
+}
+.footer-menu{
+    padding: 40px;
+    font-size: 0.9em;
+}
+.footer-menu > h3{
+    color: #949697;
+    margin-bottom: 20px;
+}
+.footer-menu > ul li{
+    list-style: none;
+    cursor: pointer;
+    padding-bottom: 10px;
+}
+.footer-menu .fa{
+    margin-right: 10px;
+}
+.footer-menu > p{
+    max-width: 150px;
+    margin-bottom: 20px;
+}
+.footer-menu > P:last-child{
+    color: #a9abab;
+}

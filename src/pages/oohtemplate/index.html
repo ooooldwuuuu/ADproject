@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="saas.js"></script>
+    <title>OOH SaaS Template</title>
+</head>
+<body>
+    <div class="navigator-container">
+            <div id="nav-user" onclick="showUserPage()">用戶登入介面</div>
+            <div id="nav-search" onclick="showSearchPage()">投放點位搜尋頁面</div>
+            <div id="nav-play" onclick="showPlayPage()">內容搜尋與投放排程頁面</div>
+    </div>
+    <div id="page-user" class="content-container-login">
+        <div class="userinfo-container">
+            <div class="logo-block">
+
+            </div>
+            <div class="userinfo-block">
+
+            </div>
+        </div>
+        <div class="function-container">
+            <div class="functionSetting">
+                <div class="functionItem"></div>
+                <div class="functionItem"></div>
+                <div class="functionItem"></div>
+                <div class="functionItem"></div>
+                <div class="functionItem"></div>
+                <div class="functionItem"></div>
+                <div class="functionItem"></div>
+                <div class="functionItem"></div>
+                <div class="functionItem"></div>
+            </div>
+            <div class="functionPreview">
+
+            </div>
+        </div>
+        <div class="chat-container">
+            <div class="chatBoard">
+
+            </div>
+            <div class="friends">
+
+            </div>
+        </div>
+    </div>
+    <div id="page-search" class="content-container-search">
+        <input type="search" name="searchBar" id="searchBar">
+        <div class="map-container">
+            <div class="status-block">
+                <div class="status-item"></div>
+                <div class="status-item"></div>
+                <div class="status-item"></div>
+                <div class="status-item"></div>
+                <div class="status-item"></div>
+                <div class="status-item"></div>
+            </div>
+            <div id="map" class="map-block">
+
+            </div>
+
+        </div>
+    </div>
+    <div id="page-play" class="content-container-play">
+
+    </div>
+    <script>
+        function myMap() {
+            var mapOptions = {
+                center: new google.maps.LatLng(51.5, -0.12),
+                zoom: 10,
+                mapTypeId: google.maps.MapTypeId.ROADMAP
+            }
+            var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+        }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCsq-4XfBCvq9cIhC5u70u7OV827UtD7lg&callback=myMap"></script>
+    
+</body>
+</html>

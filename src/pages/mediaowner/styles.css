@@ -198,24 +198,40 @@ tr:nth-child(even){background-color: #f2f2f2}
     transform: scale(1.03);
 }
 
-#popVideoContainer {
+.popupContainer {
     display: none;
+    height: 100%;
+    justify-content: center;
+    align-content: center;
 }
-#playlist {
+.closeVideoBtn {
+    position:absolute;
+    right:10px;
+    top:10px;
+    /* color: #FF3D00; */
+    border-radius: 50%;
+    transition: 0.1s ease-in-out;
+    transform: scale(2);
+}
+.closeVideoBtn:hover{
+    cursor: pointer;
+    transform: scale(2.2);
+}
+.playlist {
     display:table;
 }
-#playlist li{
+.playlist li{
     cursor:pointer;
     padding:8px;
 }
 
-#playlist li:hover{
-    color:blue;                        
+.playlist li:hover{
+    color:#FEFFED;                        
 }
-#videoarea {
+.videoarea {
     float:left;
     width:640px;
     height:480px;
     margin:10px;    
-    border:1px solid silver;
+    border:1px solid black;
 }

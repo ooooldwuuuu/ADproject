@@ -53,6 +53,27 @@ function clearFormContent(){
 }
 
 function showVideoFrame(){
-    document.getElementById('popVideoContainer').style.display = "flex";
-    alert('Hi');
+    let videoContainer = document.getElementById('popVideoContainer');
+    videoContainer.style.display = "flex";
+    let videoList = document.getElementsByClassName('movieID');
+    console.log(videoList);
+    for(let i = 0; i < videoList.length; i++){
+        videoList[i].addEventListener('click', playVideo);
+    }
+}
+
+function closeVideoFrame(){
+    document.getElementById('videoarea').pause(); 
+    document.getElementById('popVideoContainer').style.display = "none";
+}
+
+function playVideo(){ 
+    console.log('hi');
+    let videoArea = document.getElementById('videoarea');
+    let videoUrl = this.getAttribute('movieurl');
+    let videoPic = this.getAttribute('moviesposter');
+    videoArea.poster = videoPic;
+    videoArea.src = videoUrl;
+    videoArea.autoplay = 'autoplay';
+    console.log(videoUrl);
 }
