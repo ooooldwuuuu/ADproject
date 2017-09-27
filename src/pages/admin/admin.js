@@ -1,13 +1,15 @@
 // Validating Empty Field
 let mediaSeq = 0;
 function checkFieldEmpty() {
-    let userName = document.getElementById('name').value;
-    let location = document.getElementById('location').value;
-    if (userName == "" || location == "") {
-        alert("Fill All Fields !");
+    let pic = document.getElementById('uploadPic').value;
+    let video = document.getElementById('uploadVideo').value;
+    if (pic == "" && video == "") {
+        alert("Fill at least one fields !");
     } 
     else {
-        addMedia(userName, location);
+        // document.getElementById('form').submit();
+        // addMedia(userName, address);
+        //alert("Form Submitted Successfully...");
         hideForm();
     }
 
@@ -22,9 +24,9 @@ function hideForm(){
     document.getElementById('popupContainer').style.display = "none";
 }
 
-function addMedia(name, location){
+function addMedia(name, address){
     let table = document.getElementById("mediaTable");
-    //console.log(table.firstChild.innerHTML);
+    console.log(table.firstChild.innerHTML);
     let newTableRow = table.insertRow(-1);
     let cellData = [];
     for(i = 0; i < 8; i++){
@@ -39,7 +41,8 @@ function addMedia(name, location){
     // cellData[0].appendChild(seqElement);
     cellData[0].innerHTML = mediaSeq.toString();
     cellData[1].innerHTML = name;
-    cellData[2].innerHTML = location;
+    cellData[2].innerHTML = address;
+
     let videoIcon = document.createElement('i');
     videoIcon.classList.add('fa', 'fa-film');
     videoIcon.addEventListener('click', showVideoFrame);
@@ -47,16 +50,15 @@ function addMedia(name, location){
 
     let removeIcon = document.createElement('i');
     removeIcon.classList.add('fa', 'fa-trash');
-    removeIcon.addEventListener('click', removeMedia);
+    removeIcon.addEventListener('click', removeAD);
     cellData[7].appendChild(removeIcon);
 
-    // console.log(name + location);
     mediaSeq++;
 }
 
 function clearFormContent(){
-    document.getElementById('name').value = '';
-    document.getElementById('location').value = '';
+    document.getElementById('uploadPic').value = '';
+    document.getElementById('uploadVideo').value = '';
 }
 
 function showVideoFrame(){
@@ -74,24 +76,22 @@ function closeVideoFrame(){
     document.getElementById('popVideoContainer').style.display = "none";
 }
 
-function playVideo(){ 
-    console.log('hi');
-    let videoArea = document.getElementById('videoarea');
-    let videoUrl = this.getAttribute('movieurl');
-    let videoPic = this.getAttribute('moviesposter');
-    videoArea.poster = videoPic;
-    videoArea.src = videoUrl;
-    videoArea.autoplay = 'autoplay';
-    console.log(videoUrl);
-}
-
-function removeMedia(){
+function removeAD(){
     let cell = this.parentElement;
+    console.log(cell);
     let removedRow = cell.parentNode;
     console.log(removedRow);
     removedRow.parentNode.removeChild(removedRow);
 }
 
 function logout(){
+    var oReq = new XMLHttpRequest();
+	//oReq.onload = reqListener;
+	oReq.open("get", "/api/logout/", true);
+	oReq.setRequestHeader('Content-Type', 'text');
+	oReq.send();
 
+	oReq.onloadend = (xhr) => {
+        console.log("get response");
+    };
 }

@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/src/pages/adowner/styles.css">
+    <link rel="stylesheet" href="/src/pages/admin/styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <script src="/src/pages/adowner/adowner.js"></script>
+    <script src="/src/pages/admin/admin.js"></script>
     <title>AD Owner</title>
 </head>
 <body>
@@ -18,22 +18,20 @@
                 <div class="formHead">
                     Add media info
                 </div>
-                <!-- <form class="formBody" action="/app/data/upload" method="post"> -->
-                <div class="formBody">
+                <form class="formBody" action="/app/data/upload" method="post">
                     <label for="picture">Choose a picture</label>
                     <input id="uploadPic" name="picture" type="file">
                     <label for="video">Choose a video</label>
                     <input id="uploadVideo" name="video" placeholder="Choose a video" type="file">
-                    <input id="submitBtn" name="submitBtn" onclick="checkFieldEmpty()" type="button" value="Submit">
-                </div>
-                <!-- </form> -->
+                    <input type="submit" value="Submit">
+                </form>
             </div>
         </div>
     </div>
     <!-- Popup Div Ends Here -->
     <div class="identity_container">
-        <h1>AD Owner</h1>
-        <i id="logout" class="fa fa-sign-out" >Log out</i>
+        <h1>Management</h1>
+        <i id="logout" class="fa fa-sign-out" onclick="logout()">Log out</i>
     </div>
     <div class="table_container">
         <table id="mediaTable">
@@ -41,15 +39,19 @@
                 <th>編號</th>
                 <th>圖示</th>
                 <th>名稱</th>
+                <th>狀態</th>
                 <th>片長</th>
                 <th>點位數</th>
                 <th>總價</th>
+                <th>所有人</th>
                 <th>播放</th>
                 <th><i class="fa fa-plus-circle" onclick="showForm()"></i></th>
             </tr>
             <tr>
                 <td>1</td>
                 <td><img src="/Users/ChungYueh/Desktop/FWP3352092851100.jpg" style="width:100px; height:80px;" alt=""></td>
+                <td></td>
+                <td>未審核<span class="amendBtn">修改</span></td>
                 <td></td>
                 <td></td>
                 <td></td>

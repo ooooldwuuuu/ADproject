@@ -65,26 +65,55 @@ app.get('/login', function(req, res){
 app.get('/login.css', function(req, res){
     res.sendFile('src/pages/login/login.css', {root: __dirname });
 });
+app.get('/api/logout/', (req, res, next)=>{
+    console.log("Log out");
+    res.sendFile('src/pages/login/login.html', {root: __dirname });
+});
 
 // app.get('/src/pages/owner', function(req, res){
 //     res.sendFile('src/pages/owner/mediaowner.html', {root: __dirname });
 // });
-app.get('/src/pages/owner/styles.css', function(req, res){
-    res.sendFile('src/pages/owner/styles.css', {root: __dirname });
+app.get('/src/pages/mediaowner/styles.css', function(req, res){
+    res.sendFile('/src/pages/mediaowner/styles.css', {root: __dirname });
 });
-app.get('/src/pages/owner/mediaowner.js', function(req, res){
-    res.sendFile('src/pages/owner/mediaowner.js', {root: __dirname });
+app.get('/src/pages/mediaowner/mediaowner.js', function(req, res){
+    res.sendFile('/src/pages/mediaowner/mediaowner.js', {root: __dirname });
 });
 
-app.post('/src/pages/owner/', function(req, res){
+app.get('/src/pages/adowner/styles.css', function(req, res){
+    res.sendFile('/src/pages/adowner/styles.css', {root: __dirname });
+});
+app.get('/src/pages/adowner/adowner.js', function(req, res){
+    res.sendFile('/src/pages/adowner/adowner.js', {root: __dirname });
+});
+
+app.get('/src/pages/admin/styles.css', function(req, res){
+    res.sendFile('/src/pages/admin/styles.css', {root: __dirname });
+});
+app.get('/src/pages/admin/admin.js', function(req, res){
+    res.sendFile('/src/pages/admin/admin.js', {root: __dirname });
+});
+
+app.post('/app/login', function(req, res){
     let identity = req.body.identity;
     console.log(req.body);
     //console.log(req.query);
     //console.log(identity);
     if(identity == "Media Owner")
-        res.sendFile('src/pages/owner/mediaowner.html', {root: __dirname });
+        res.sendFile('/src/pages/mediaowner/mediaowner.html', {root: __dirname });
+    else if(identity == "AD Owner")
+        res.sendFile('/src/pages/adowner/adowner.html', {root: __dirname });
+    else if(identity == "Administrator")
+        res.sendFile('/src/pages/admin/admin.html', {root: __dirname });
     else
         res.send('Wrong identity');
+});
+
+app.post('/app/data/upload', (req, res, next)=>{
+    console.log(req.body)
+    res.sendFile('/src/pages/adowner/adowner.html', {root: __dirname });
+	//res.end('ok');
+	// res.json({ status: 'ok' });
 });
 
 

@@ -1,15 +1,15 @@
 // Validating Empty Field
 let mediaSeq = 0;
 function checkFieldEmpty() {
-    let userName = document.getElementById('name').value;
-    let address = document.getElementById('address').value;
-    if (userName == "" || address == "") {
-        alert("Fill All Fields !");
+    let pic = document.getElementById('uploadPic').value;
+    let video = document.getElementById('uploadVideo').value;
+    if (pic == "" && video == "") {
+        alert("Fill at least one fields !");
     } 
     else {
         // document.getElementById('form').submit();
-        addMedia(userName, address);
-        // alert("Form Submitted Successfully...");
+        addAD(pic, video);
+        //alert("Form Submitted Successfully...");
         hideForm();
     }
 
@@ -24,42 +24,52 @@ function hideForm(){
     document.getElementById('popupContainer').style.display = "none";
 }
 
-function addMedia(name, address){
+function addAD(pic, video){
     let table = document.getElementById("mediaTable");
-    console.log(table.firstChild.innerHTML);
+    //console.log(table.firstChild.innerHTML);
     let newTableRow = table.insertRow(-1);
-    newTableRow.addEventListener("click", showVideoFrame);
     let cellData = [];
-    for(i = 0; i < 6; i++){
+    for(i = 0; i < 8; i++){
         cellData[i] = newTableRow.insertCell(i);
     }
-    // let seqElement = document.createElement('button');
-    // seqElement.classList.add('seqButton');
-    // seqElement.innerHTML = mediaSeq.toString();
-    // seqElement.addEventListener("click", function (){
-    //                                                   showVideoFrame();});
-    
-    // cellData[0].appendChild(seqElement);
+
     cellData[0].innerHTML = mediaSeq.toString();
-    cellData[1].innerHTML = name;
-    cellData[2].innerHTML = address;
-    console.log(name + address);
+    let adPath;
+    if(pic){
+        let tmpImg = document.createElement('img');
+        tmpImg.src = pic;
+        cellData[1].appendChild(tmpImg);
+    }
+    if(video){
+        adPath = video;
+    }
+
+    let videoIcon = document.createElement('i');
+    videoIcon.classList.add('fa', 'fa-film');
+    videoIcon.videoSrc = adPath;
+    videoIcon.addEventListener('click', showVideoFrame);
+    cellData[6].appendChild(videoIcon);
+
+    let removeIcon = document.createElement('i');
+    removeIcon.classList.add('fa', 'fa-trash');
+    removeIcon.addEventListener('click', removeAD);
+    cellData[7].appendChild(removeIcon);
+
     mediaSeq++;
 }
 
 function clearFormContent(){
-    document.getElementById('name').value = '';
-    document.getElementById('address').value = '';
+    document.getElementById('uploadPic').value = '';
+    document.getElementById('uploadVideo').value = '';
 }
 
 function showVideoFrame(){
     let videoContainer = document.getElementById('popVideoContainer');
     videoContainer.style.display = "flex";
-    let videoList = document.getElementsByClassName('movieID');
-    console.log(videoList);
-    for(let i = 0; i < videoList.length; i++){
-        videoList[i].addEventListener('click', playVideo);
-    }
+    let video = document.getElementsByClassName('videoarea');
+    let adPath = this.videoSrc;
+    if(adPath)
+        video.src = adPath;
 }
 
 function closeVideoFrame(){
@@ -67,13 +77,10 @@ function closeVideoFrame(){
     document.getElementById('popVideoContainer').style.display = "none";
 }
 
-function playVideo(){ 
-    console.log('hi');
-    let videoArea = document.getElementById('videoarea');
-    let videoUrl = this.getAttribute('movieurl');
-    let videoPic = this.getAttribute('moviesposter');
-    videoArea.poster = videoPic;
-    videoArea.src = videoUrl;
-    videoArea.autoplay = 'autoplay';
-    console.log(videoUrl);
+function removeAD(){
+    let cell = this.parentElement;
+    console.log(cell);
+    let removedRow = cell.parentNode;
+    console.log(removedRow);
+    removedRow.parentNode.removeChild(removedRow);
 }
