@@ -20,13 +20,15 @@
                 <div class="formHead">
                     Add media info
                 </div>
-                <form class="formBody" action="/app/data/upload" method="post">
+                <!-- <form class="formBody" action="/app/data/upload" method="post"> -->
+                <div class="formBody">
                     <label for="picture">Choose a picture</label>
                     <input id="uploadPic" name="picture" type="file">
                     <label for="video">Choose a video</label>
                     <input id="uploadVideo" name="video" placeholder="Choose a video" type="file">
-                    <input type="submit" value="Submit">
-                </form>
+                    <input id="submitBtn" name="submitBtn" onclick="checkFieldEmpty()" type="button" value="Submit">
+                </div>
+                <!-- </form> -->
             </div>
         </div>
     </div>
@@ -43,13 +45,13 @@
                 <th>名稱</th>
                 <th>狀態</th>
                 <th>片長</th>
-                <th>點位數</th>
+                <th>點位</th>
                 <th>總價</th>
                 <th>所有人</th>
                 <th>播放</th>
                 <th><i class="fa fa-plus-circle" onclick="showForm()"></i></th>
             </tr>
-            <tr>
+            <!-- <tr>
                 <td>1</td>
                 <td><img src="/Users/ChungYueh/Desktop/FWP3352092851100.jpg" style="width:100px; height:80px;" alt=""></td>
                 <td></td>
@@ -60,13 +62,13 @@
                 <td></td>
                 <td><i class="fa fa-film" onclick="showVideoFrame()"></i></td>
                 <td><i class="fa fa-trash" onclick="removeAD()"></i></td>
-            </tr>
+            </tr> -->
         </table>
     </div>
     <!-- Popup video start here -->
     <div id='popVideoContainer' class='popupVideoContainer'>
         <i id="closeVideoBtn" onclick ="closeVideoFrame()" class="closeVideoBtn fa fa-times"></i>
-        <video id="videoarea" class="videoarea" controls="controls" poster="/Users/ChungYueh/Desktop/FWP3352092851100.jpg" src="/Users/ChungYueh/Desktop/skydiving/Chung.mp4"></video>
+        <video id="videoarea" class="videoarea" autoplay controls="controls" poster="" src=""></video>
     </div>
     <!-- Popup video end here -->
 </body>

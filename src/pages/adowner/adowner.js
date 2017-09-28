@@ -41,18 +41,59 @@ function addAD(pic, video) {
 		cellData[1].appendChild(tmpImg);
 	}
 	if (video) {
+		video = video.replace('C:\\fakepath\\', '../../videos/');
 		adPath = video;
 	}
+
+	let locationListDiv = document.createElement('div');
+	locationListDiv.classList.add('locationListBlock');
+	// let checkBox = document.createElement('input');
+	// checkBox.type = 'checkbox';
+	let locationBox1 = document.createElement('input');
+	locationBox1.type = 'checkbox';
+	let locationBox2 = document.createElement('input');
+	locationBox2.type = 'checkbox';
+	let locationBox3 = document.createElement('input');
+	locationBox3.type = 'checkbox';
+	locationBox1.name = 'media1';
+	locationBox2.name = 'media2';
+	locationBox3.name = 'media3';
+	locationBox1.value = 'Jacky';
+	locationBox2.value = 'Zenic';
+	locationBox3.value = 'Jimmy';
+	let locateBoxBtn = document.createElement('span');
+	locateBoxBtn.classList.add('locateBtn');
+	locateBoxBtn.addEventListener('click', confirmLocate);
+	locateBoxBtn.innerHTML = '確認';
+	let label1 = document.createElement('label');
+	let label2 = document.createElement('label');
+	let label3 = document.createElement('label');
+	label1.setAttribute('for', 'media1');
+	label2.setAttribute('for', 'media2');
+	label3.setAttribute('for', 'media3');
+	label1.innerHTML = 'Jacky';
+	label2.innerHTML = 'Zenic';
+	label3.innerHTML = 'Jimmy';
+
+	
+	locationListDiv.appendChild(locationBox1);
+	locationListDiv.appendChild(label1);
+	locationListDiv.appendChild(locationBox2);
+	locationListDiv.appendChild(label2);
+	locationListDiv.appendChild(locationBox3);
+	locationListDiv.appendChild(label3);
+	locationListDiv.appendChild(locateBoxBtn);
+	cellData[4].appendChild(locationListDiv);
 
 	let locate = document.createElement('span');
 	locate.classList.add('locateBtn');
 	locate.addEventListener('click', chooseLocate);
-	locate.innerHTML = 'Location';
+	locate.innerHTML = '選擇看板';
 	cellData[4].appendChild(locate);
 
 	let videoIcon = document.createElement('i');
 	videoIcon.classList.add('fa', 'fa-film');
-	videoIcon.videoSrc = adPath;
+	videoIcon.setAttribute('videoSrc', adPath);
 	videoIcon.addEventListener('click', showVideoFrame);
 	cellData[6].appendChild(videoIcon);
 
@@ -72,8 +113,8 @@ function clearFormContent() {
 function showVideoFrame() {
 	let videoContainer = document.getElementById('popVideoContainer');
 	videoContainer.style.display = 'flex';
-	let video = document.getElementsByClassName('videoarea');
-	let adPath = this.videoSrc;
+	let video = document.getElementById('videoarea');
+	let adPath = this.getAttribute('videoSrc');
 	if (adPath)
 		video.src = adPath;
 }
@@ -94,5 +135,11 @@ function logout() {
 	window.location.href = '../login/login.html';
 }
 function chooseLocate() {
-
+	console.log(this.parentElement.firstChild);
+	this.parentElement.firstChild.style.display = 'block';
+	this.style.display = 'none';
+}
+function confirmLocate() {
+	this.parentElement.style.display = 'none';
+	this.parentElement.parentElement.lastChild.style.display = 'block';
 }
