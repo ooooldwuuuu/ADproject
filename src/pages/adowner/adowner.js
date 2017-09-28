@@ -34,13 +34,21 @@ function addAD(pic, video) {
 	cellData[0].innerHTML = mediaSeq.toString();
 	let adPath;
 	if (pic) {
+		pic = pic.replace('C:\\fakepath\\', '../../images/');
 		let tmpImg = document.createElement('img');
 		tmpImg.src = pic;
+		tmpImg.classList.add('pic');
 		cellData[1].appendChild(tmpImg);
 	}
 	if (video) {
 		adPath = video;
 	}
+
+	let locate = document.createElement('span');
+	locate.classList.add('locateBtn');
+	locate.addEventListener('click', chooseLocate);
+	locate.innerHTML = 'Location';
+	cellData[4].appendChild(locate);
 
 	let videoIcon = document.createElement('i');
 	videoIcon.classList.add('fa', 'fa-film');
@@ -81,4 +89,10 @@ function removeAD() {
 	let removedRow = cell.parentNode;
 	console.log(removedRow);
 	removedRow.parentNode.removeChild(removedRow);
+}
+function logout() {
+	window.location.href = '../login/login.html';
+}
+function chooseLocate() {
+
 }

@@ -67,9 +67,12 @@ function showVideoFrame() {
 	video1.classList.add('movieID');
 	video2.classList.add('movieID');
 	video3.classList.add('movieID');
-	video1.setAttribute('movieurl', 'http://html5videoformatconverter.com/data/images/happyfit2.mp4');
-	video2.setAttribute('movieurl', 'http://grochtdreis.de/fuer-jsfiddle/video/sintel_trailer-480.mp4');
-	video3.setAttribute('movieurl', 'http://www.ioncannon.net/examples/vp8-webm/big_buck_bunny_480p.webm');
+	// video1.setAttribute('movieurl', 'http://html5videoformatconverter.com/data/images/happyfit2.mp4');
+	// video2.setAttribute('movieurl', 'http://grochtdreis.de/fuer-jsfiddle/video/sintel_trailer-480.mp4');
+	// video3.setAttribute('movieurl', 'http://www.ioncannon.net/examples/vp8-webm/big_buck_bunny_480p.webm');
+	video1.setAttribute('movieurl', '../../videos/feet.mp4');
+	video2.setAttribute('movieurl', '../../videos/sintel.mp4');
+	video3.setAttribute('movieurl', '../../videos/bunny.webm');
 	video1.appendChild(document.createTextNode(' Happy Fit'));
 	video2.appendChild(document.createTextNode(' Sintel'));
 	video3.appendChild(document.createTextNode(' Big Buck Bunny'));
@@ -130,4 +133,5 @@ function removeMedia() {
 }
 
 function logout() {
+	window.location.href = '../login/login.html';
 }

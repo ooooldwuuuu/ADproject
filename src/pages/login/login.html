@@ -4,17 +4,20 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Monitor</title>
-    <link rel="stylesheet" href="./login.css">
+    <!-- <link rel="stylesheet" href="./login.css"> -->
+    <link rel="stylesheet" href="login.css">
+    <script src="login.js"></script>
   </head>
   <body>
     <div class="logo">
     </div>
     <div class="mainbody">
-      <form class="loginform" action="/app/login" method="post">
+      <!-- <form class="loginform" action="/app/login" method="post"> -->
+      <div class="loginform"> 
         <div class="inputbox">
           <input type="text" name="account" placeholder="Account"/>
           <input type="password" name="password" placeholder="Password"/>
-          <input list="identity" name="identity" placeholder="Choose login identity">
+          <input id="dataList" onblur="recordOption()" list="identity" name="identity" placeholder="Choose login identity">
             <datalist id="identity">
               <option value="Media Owner">
               <option value="AD Owner">
@@ -23,9 +26,10 @@
         </div>  
         <div class="buttonbox">
           <button type="button">Sign Up</button>
-          <button type="submit">Log In</button>
+          <button type="submit" onclick="login()">Log In</button>
         </div>
-      </form>
+      </div>
+      <!-- </form> -->
       <a href="#" class="forget">Forget Password?</a>
     </div>
   </body>
