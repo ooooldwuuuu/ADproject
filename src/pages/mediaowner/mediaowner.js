@@ -71,11 +71,11 @@ function showVideoFrame() {
 	// video2.setAttribute('movieurl', 'http://grochtdreis.de/fuer-jsfiddle/video/sintel_trailer-480.mp4');
 	// video3.setAttribute('movieurl', 'http://www.ioncannon.net/examples/vp8-webm/big_buck_bunny_480p.webm');
 	video1.setAttribute('movieurl', '../../videos/feet.mp4');
-	video2.setAttribute('movieurl', '../../videos/sintel.mp4');
-	video3.setAttribute('movieurl', '../../videos/bunny.webm');
+	video2.setAttribute('movieurl', '../../videos/chanel.mp4');
+	video3.setAttribute('movieurl', '../../videos/dior.mp4');
 	video1.appendChild(document.createTextNode(' Happy Fit'));
-	video2.appendChild(document.createTextNode(' Sintel'));
-	video3.appendChild(document.createTextNode(' Big Buck Bunny'));
+	video2.appendChild(document.createTextNode(' Chanel'));
+	video3.appendChild(document.createTextNode(' Dior'));
 	let playList = document.getElementById('playlist');
 	playList.innerHTML = '';
 	let seqNum = this.parentNode.parentNode.firstChild.innerHTML;
