@@ -19,6 +19,7 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
-    "marko": "^4.4.26"
+    "marko": "^4.4.26",
+    "multiparty": "^4.1.3"
   }
 }
