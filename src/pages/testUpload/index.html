@@ -55,6 +55,13 @@
                     //新增上傳檔案，上傳後名稱為 ff 的陣列
                     fd.append('ff[]', files[i]);
                 }
+                else if (files[i].type == 'video/mp4') {
+                    var fr = new FileReader();
+                    fr.onload = openvideo;
+                    fr.readAsDataURL(files[i]);
+
+                    fd.append('ff[]', files[i]);
+                }
             }
             xhr.send(fd);//開始上傳
         }
@@ -64,14 +71,20 @@
             imgx.style.margin = "10px";
             imgx.src = img;
             document.getElementById('imgDIV').appendChild(imgx);
-        }    
+        } 
+        function openvideo(evt) {
+            var videoSrc = evt.target.result;
+            var video = document.getElementById('video');
+            video.src = videoSrc;
+        }     
     </script>
 </head>
 <body>
     <div id="dropDIV" ondragover="dragoverHandler(event)" ondrop="dropHandler(event)">
-    拖曳圖片到此處上傳
-    <div id="up_progress"></div>
+        拖曳圖片到此處上傳
+        <div id="up_progress"></div>
     </div>
     <div id="imgDIV"></div>
+    <video id="video" width="320" height="240" autoplay controls src="">
 </body>
 </html>
