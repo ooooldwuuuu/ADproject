@@ -6,7 +6,8 @@ function checkFieldEmpty() {
 	if (userName == '' || location == '') {
 		alert('Fill All Fields !');
 	} else {
-		addMedia(userName, location);
+		//uploadMediaInfo(userName, location);
+		//addMedia(userName, location);
 		hideForm();
 	}
 }
@@ -19,8 +20,26 @@ function showForm() {
 function hideForm() {
 	document.getElementById('popupContainer').style.display = 'none';
 }
-
-function addMedia(name, location) {
+function uploadMediaInfo(userName, location) {
+	// let formBody = document.getElementById('formBody');
+	// console.log(formBody);
+	// let fd = new FormData(formBody);
+	let xhr = new XMLHttpRequest();
+	xhr.responseType = 'json';
+	xhr.onreadystatechange = () => {
+		if (this.readyState == 4 && this.status == 200) {
+			console.log('新增成功');
+		}
+	};
+	xhr.open('POST', '/app/data/add');
+	xhr.onload = function() {
+		console.log(this.response);
+	};
+	let sendStr = 'name=' + userName + '&' + 'location=' + location;
+	console.log(sendStr);
+	xhr.send(sendStr);
+}
+function addMedia(mediaObj) {
 	let table = document.getElementById('mediaTable');
 	//console.log(table.firstChild.innerHTML);
 	let newTableRow = table.insertRow(-1);
@@ -34,13 +53,20 @@ function addMedia(name, location) {
 	// seqElement.addEventListener('click', function (){
 	//                                                   showVideoFrame();});
 	// cellData[0].appendChild(seqElement);
-	cellData[0].innerHTML = mediaSeq.toString();
-	cellData[1].innerHTML = name;
+	//cellData[0].innerHTML = mediaSeq.toString();
+	cellData[0].innerHTML = mediaObj.seqNo;
+	cellData[1].innerHTML = mediaObj.mediaName;
 	cellData[1].classList.add('ownerName');
-	cellData[2].innerHTML = location;
+	cellData[2].innerHTML = mediaObj.location;
+	cellData[3].innerHTML = mediaObj.time;
+	cellData[4].innerHTML = mediaObj.price;
+	cellData[5].innerHTML = mediaObj.income;
 	let videoIcon = document.createElement('i');
 	videoIcon.classList.add('fa', 'fa-film');
-	videoIcon.addEventListener('click', showVideoFrame);
+	videoIcon.addEventListener('click', (e) => {
+		console.log(this);
+		showVideoFrame(videoIcon);
+	});
 	cellData[6].appendChild(videoIcon);
 
 	let removeIcon = document.createElement('i');
@@ -57,7 +83,12 @@ function clearFormContent() {
 	document.getElementById('location').value = '';
 }
 
-function showVideoFrame() {
+function showVideoFrame(videoIcon) {
+	let videoContainer = document.getElementById('popVideoContainer');
+	videoContainer.style.display = 'flex';
+	console.log(videoIcon);
+	requestVideoList(this);
+
 	let ownerList = document.getElementsByClassName('ownerName');
 	let playIcon = document.createElement('i');
 	playIcon.classList.add('fa', 'fa-play');
@@ -73,6 +104,12 @@ function showVideoFrame() {
 	video1.setAttribute('movieurl', '../../videos/feet.mp4');
 	video2.setAttribute('movieurl', '../../videos/chanel.mp4');
 	video3.setAttribute('movieurl', '../../videos/dior.mp4');
+	video1.appendChild(document.createElement('i'));
+	video2.appendChild(document.createElement('i'));
+	video3.appendChild(document.createElement('i'));
+	video1.getElementsByTagName('i')[0].classList.add('fa', 'fa-play');
+	video2.getElementsByTagName('i')[0].classList.add('fa', 'fa-play');
+	video3.getElementsByTagName('i')[0].classList.add('fa', 'fa-play');
 	video1.appendChild(document.createTextNode(' Happy Fit'));
 	video2.appendChild(document.createTextNode(' Chanel'));
 	video3.appendChild(document.createTextNode(' Dior'));
@@ -99,8 +136,6 @@ function showVideoFrame() {
 	// for (let i = 0; i < ownerList.length; i++){
 	// 	if(ownerList[i].innerHTML == "")
 	// }
-	let videoContainer = document.getElementById('popVideoContainer');
-	videoContainer.style.display = 'flex';
 	let videoList = document.getElementsByClassName('movieID');
 	console.log(videoList);
 	for (let i = 0; i < videoList.length; i++) {
@@ -134,4 +169,40 @@ function removeMedia() {
 
 function logout() {
 	window.location.href = '../login/login.html';
+}
+
+function requestUserMedia() {
+	let userName = document.getElementById('userName').value;
+	let sendObj = {};
+	sendObj.userName = userName;
+	let xhr = new XMLHttpRequest();
+	xhr.responseType = 'text';
+	xhr.open('POST', '/app/data/media');
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.send(JSON.stringify(sendObj));
+	xhr.onload = updateMediaList;
+}
+
+function updateMediaList() {
+	let resMediaListObj = JSON.parse(this.responseText);
+	let resMediaList = resMediaListObj.mediaList;
+	console.log(resMediaList);
+	for (let i = 0; i < resMediaList.length; i++) {
+		addMedia(resMediaList[i]);
+	}
+}
+
+function requestVideoList(icon) {
+	console.log(icon);
+	let userName = document.getElementById('userName').value;
+	let sendObj = {};
+	sendObj.userName = userName;
+	// sendObj.mediaSeqNo
+	// let xhr = new XMLHttpRequest();
+	// xhr.responseType = 'text';
+	// xhr.open('POST', '/app/data/media');
+	// xhr.setRequestHeader('Content-Type', 'application/json');
+	// //console.log(JSON.stringify(userObj));
+	// xhr.send(JSON.stringify(sendObj));
+	// xhr.onload = updateMediaList;
 }

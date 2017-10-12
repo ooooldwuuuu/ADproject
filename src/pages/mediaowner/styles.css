@@ -214,6 +214,23 @@ tr:nth-child(even){background-color: #f2f2f2}
     background-color: #ffc219;
     transform: scale(1.03);
 }
+.formBody > input[type=submit]{
+    width: 100%;
+    border: none;
+    background-color: #FFBC00;
+    color:white;
+    font-size: 110%;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-top: 40px;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+.formBody > input[type=submit]:hover{
+    background-color: #ffc219;
+    transform: scale(1.03);
+}
 
 .popupVideoContainer {
     display: none;

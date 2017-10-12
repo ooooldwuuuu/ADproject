@@ -96,7 +96,7 @@ app.get('/src/pages/admin/admin.js', function(req, res) {
 	res.sendFile('/src/pages/admin/admin.js', {root: __dirname });
 });
 
-app.post('/app/login', function(req, res) {
+app.post('/login', function(req, res) {
 	let identity = req.body.identity;
 	console.log(req.body);
 	//console.log(req.query);
@@ -109,6 +109,25 @@ app.post('/app/login', function(req, res) {
 		res.sendFile('/src/pages/admin/admin.html', {root: __dirname });
 	else
 		res.send('Wrong identity');
+});
+app.post('/app/data/add', function (req, res) {
+	console.log(req.body);
+	res.sendFile('/src/pages/mediaowner/mediaowner.html', {root: __dirname });
+});
+app.post('/app/data/media', function (req, res) {
+	console.log(req.body);
+	res.json({
+		'mediaList': [
+			{
+				'seqNo': '0',
+				'mediaName': 'Market',
+				'location': 'Taipei',
+				'time': '3',
+				'price': '500',
+				'income': '10000',
+			},
+		],
+	});
 });
 
 // app.post('/app/data/upload', (req, res, next)=>{

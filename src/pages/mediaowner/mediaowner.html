@@ -5,11 +5,15 @@
         <!-- <link rel="stylesheet" href="/src/pages/mediaowner/styles.css"> -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <!-- <script src="/src/pages/mediaowner/mediaowner.js"></script> -->
-        <link rel="stylesheet" href="styles.css">
-        <script src="mediaowner.js"></script>
+        <link rel="stylesheet" href="/src/pages/mediaowner/styles.css">
+        <script src="/src/pages/mediaowner/mediaowner.js"></script>
         <title>Media Owner</title>
     </head>
     <body>
+        <div style="display: hidden">
+            <!-- <input id="userName" type="hidden" value=${input.userName}> -->
+            <input id="userName" type="hidden" value="Roal">
+        </div>
         <!-- Popup Div Starts Here -->
         <div id="popupContainer" class="popupContainer">
             <div id="popupContact" class="popupContact">
@@ -19,11 +23,12 @@
                     <div class="formHead">
                         Add media info
                     </div>
-                    <div class="formBody">
+                    <form id="formBody" class="formBody" action="/app/data/add" method="post">
                         <input id="name" name="name" placeholder="&#xf007; Name" type="text">
                         <input id="location" name="location" placeholder="&#xf015; location" type="text">
-                        <input id="submitBtn" name="submitBtn" onclick="checkFieldEmpty()" type="button" value="Submit">
-                    </div>
+                        <!-- <input id="submitBtn" name="submitBtn" onclick="checkFieldEmpty()" type="button" value="Submit"> -->
+                        <input id="submitBtn" name="submitBtn" type="submit" value="submit">
+                    </form>
                 </div>
             </div>
         </div>
@@ -66,4 +71,7 @@
         </div>
         <!-- Popup video end here -->
     </body>
+    <script>
+        requestUserMedia();
+    </script>
 </html>
