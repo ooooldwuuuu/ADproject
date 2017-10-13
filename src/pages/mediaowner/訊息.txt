@@ -1,0 +1,50 @@
+---載入user media list---
+post request:
+{ 
+    userName: 'Roal'
+}
+response:
+{
+    'mediaList': [
+        {
+            'seqNo': '0',
+            'mediaName': 'Market',
+            'location': 'Taipei',
+            'time': '3',
+            'price': '500',
+            'income': '10000',
+        },
+    ],
+}
+
+
+---新增media---
+post request:
+{ 
+    name: 'R', 
+    location: 'T', 
+    submitBtn: 'submit' 
+}
+response:
+mediaowner頁面，藏userName
+
+
+
+---載入該面板的video list---
+post request:
+{ 
+    userName: 'Roal', 
+    mediaSeqNo: '0'
+}
+response:
+{
+    'videoList': ['Dior', 'Chanel', 'feet'],
+}
+
+---播放影片---
+get request
+
+
+
+---登出---
+get request

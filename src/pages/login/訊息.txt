@@ -1,0 +1,9 @@
+get request:
+{ 
+    account: '', 
+    password: '', 
+    identity: 'Media Owner',
+}
+
+response:
+頁面（mediaowner/adowner/admin），裡面要藏userName
