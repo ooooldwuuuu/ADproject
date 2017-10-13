@@ -129,7 +129,24 @@ app.post('/app/data/media', function (req, res) {
 		],
 	});
 });
-
+app.post('/app/data/video', function (req, res) {
+	console.log(req.body);
+	res.json({
+		'videoList': ['Dior', 'Chanel', 'feet'],
+	});
+});
+app.post('/app/data/delete', function (req, res) {
+	console.log(req.body);
+	res.send(null);
+});
+app.get('/app/data/logout', function (req, res) {
+	console.log('logout');
+	res.sendFile('src/pages/login/login.html', {root: __dirname });
+});
+app.get('/videos/feet.mp4', function (req, res) {
+	console.log('video');
+	res.sendFile('src/videos/feet.mp4', {root: __dirname });
+});
 // app.post('/app/data/upload', (req, res, next)=>{
 // 	console.log(req.body);
 // 	res.sendFile('/src/pages/adowner/adowner.html', {root: __dirname });
