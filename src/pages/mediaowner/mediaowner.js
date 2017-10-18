@@ -49,8 +49,8 @@ function addMedia(mediaObj) {
 }
 
 function showVideoFrame(videoIcon) {
-	let videoContainer = document.getElementById('popVideoContainer');
-	videoContainer.style.display = 'flex';
+	document.getElementById('popVideoContainer').style.display = 'flex';
+	document.getElementById('table_container').style.display = 'none';
 	requestVideoList(videoIcon);
 }
 
@@ -58,6 +58,7 @@ function closeVideoFrame() {
 	document.getElementById('videoarea').pause();
 	document.getElementById('videoarea').src = '';
 	document.getElementById('popVideoContainer').style.display = 'none';
+	document.getElementById('table_container').style.display = 'flex';
 }
 function requestUserMedia() {
 	let userName = document.getElementById('userName').value;
@@ -98,7 +99,7 @@ function requestVideoList(videoIcon) {
 function updateVideoList() {
 	let resVideoListObj = JSON.parse(this.responseText);
 	let resVideoList = resVideoListObj.videoList;
-	console.log(resVideoList);
+	//console.log(resVideoList);
 	let playList = document.getElementById('playlist');
 	playList.innerHTML = '';
 	for (let i = 0; i < resVideoList.length; i++) {
@@ -112,7 +113,7 @@ function addVideo(videoName, playList) {
 		cellData[i] = row.insertCell(i);
 	}
 	let sortIcon = document.createElement('i');
-	sortIcon.classList.add('fa', 'fa-sort');
+	sortIcon.classList.add('fa', 'fa-bars');
 	cellData[0].appendChild(sortIcon);
 	cellData[1].appendChild(document.createTextNode(videoName));
 	let playIcon = document.createElement('i');
@@ -120,6 +121,12 @@ function addVideo(videoName, playList) {
 	playIcon.setAttribute('movieurl', '/videos/' + videoName + '.mp4');
 	playIcon.addEventListener('click', playVideo);
 	cellData[2].appendChild(playIcon);
+	row.setAttribute('draggable', 'true');
+	row.addEventListener('dragstart', handleDragStart, false);
+}
+function handleDragStart(e) {
+	console.log(e.target);
+	e.target.style.opacity = '0.4'; // this / e.target is the source node.
 }
 function playVideo() {
 	let videoArea = document.getElementById('videoarea');
