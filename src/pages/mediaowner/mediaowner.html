@@ -2,14 +2,18 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <!-- <link rel="stylesheet" href="/src/pages/mediaowner/styles.css"> -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <!-- <script src="/src/pages/mediaowner/mediaowner.js"></script> -->
-        <link rel="stylesheet" href="styles.css">
-        <script src="mediaowner.js"></script>
+        <!-- <link rel="stylesheet" href="styles.css">
+        <script src="mediaowner.js"></script> -->
+        <link rel="stylesheet" href="/src/pages/mediaowner/styles.css">
+        <script src="/src/pages/mediaowner/mediaowner.js"></script>
         <title>Media Owner</title>
     </head>
     <body>
+        <div style="display: hidden">
+            <!-- <input id="userName" type="hidden" value=${input.userName}> -->
+            <input id="userName" type="hidden" value="Roal">
+        </div>
         <!-- Popup Div Starts Here -->
         <div id="popupContainer" class="popupContainer">
             <div id="popupContact" class="popupContact">
@@ -19,11 +23,12 @@
                     <div class="formHead">
                         Add media info
                     </div>
-                    <div class="formBody">
+                    <form id="formBody" class="formBody" action="/app/data/add" method="post">
                         <input id="name" name="name" placeholder="&#xf007; Name" type="text">
                         <input id="location" name="location" placeholder="&#xf015; location" type="text">
-                        <input id="submitBtn" name="submitBtn" onclick="checkFieldEmpty()" type="button" value="Submit">
-                    </div>
+                        <!-- <input id="submitBtn" name="submitBtn" onclick="checkFieldEmpty()" type="button" value="Submit"> -->
+                        <input id="submitBtn" name="submitBtn" type="submit" value="submit">
+                    </form>
                 </div>
             </div>
         </div>
@@ -32,7 +37,7 @@
             <h1>Media Owner</h1>
             <i id="logout" class="fa fa-sign-out" onclick="logout()">Log out</i>
         </div>
-        <div class="table_container">
+        <div id="table_container" class="table_container">
             <table id="mediaTable">
                 <tr>
                     <th>編號</th>
@@ -58,12 +63,15 @@
         <div id='popVideoContainer' class='popupVideoContainer'>
             <i id="closeVideoBtn" onclick ="closeVideoFrame()" class="closeVideoBtn fa fa-times"></i>
             <video id="videoarea" class="videoarea" controls="controls" poster="" src=""></video>
-            <ul id="playlist" class="playlist">
-                <!-- <li class="movieID" movieurl="http://html5videoformatconverter.com/data/images/happyfit2.mp4"><i class="fa fa-play"></i> Happy Fit</li>
-                <li class="movieID" movieurl="http://grochtdreis.de/fuer-jsfiddle/video/sintel_trailer-480.mp4"><i class="fa fa-play"></i> Sintel</li>          
-                <li class="movieID" movieurl="http://www.ioncannon.net/examples/vp8-webm/big_buck_bunny_480p.webm"><i class="fa fa-play"></i> Big Buck Bunny</li> -->
-            </ul>
+            <table id="playlist" class="playlist">
+
+            </table>
+            <!-- <ul id="playlist" class="playlist">
+            </ul> -->
         </div>
         <!-- Popup video end here -->
     </body>
+    <script>
+        requestUserMedia();
+    </script>
 </html>

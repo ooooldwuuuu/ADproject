@@ -4,23 +4,20 @@ function checkFieldEmpty() {
 	let userName = document.getElementById('name').value;
 	let location = document.getElementById('location').value;
 	if (userName == '' || location == '') {
-		alert('Fill All Fields !');
+		alert('Please Fill All Fields !');
 	} else {
-		addMedia(userName, location);
 		hideForm();
 	}
 }
-//Function To Display Popup
 function showForm() {
+	document.getElementById('name').value = '';
+	document.getElementById('location').value = '';
 	document.getElementById('popupContainer').style.display = 'flex';
-	clearFormContent();
 }
-//Function to Hide Popup
 function hideForm() {
 	document.getElementById('popupContainer').style.display = 'none';
 }
-
-function addMedia(name, location) {
+function addMedia(mediaObj) {
 	let table = document.getElementById('mediaTable');
 	//console.log(table.firstChild.innerHTML);
 	let newTableRow = table.insertRow(-1);
@@ -28,19 +25,19 @@ function addMedia(name, location) {
 	for (i = 0; i < 8; i++) {
 		cellData[i] = newTableRow.insertCell(i);
 	}
-	// let seqElement = document.createElement('button');
-	// seqElement.classList.add('seqButton');
-	// seqElement.innerHTML = mediaSeq.toString();
-	// seqElement.addEventListener('click', function (){
-	//                                                   showVideoFrame();});
-	// cellData[0].appendChild(seqElement);
-	cellData[0].innerHTML = mediaSeq.toString();
-	cellData[1].innerHTML = name;
+	cellData[0].innerHTML = mediaObj.seqNo;
+	cellData[1].innerHTML = mediaObj.mediaName;
 	cellData[1].classList.add('ownerName');
-	cellData[2].innerHTML = location;
+	cellData[2].innerHTML = mediaObj.location;
+	cellData[3].innerHTML = mediaObj.time;
+	cellData[4].innerHTML = mediaObj.price;
+	cellData[5].innerHTML = mediaObj.income;
 	let videoIcon = document.createElement('i');
 	videoIcon.classList.add('fa', 'fa-film');
-	videoIcon.addEventListener('click', showVideoFrame);
+	videoIcon.addEventListener('click', (e) => {
+		//console.log(this);
+		showVideoFrame(videoIcon);
+	});
 	cellData[6].appendChild(videoIcon);
 
 	let removeIcon = document.createElement('i');
@@ -48,90 +45,154 @@ function addMedia(name, location) {
 	removeIcon.addEventListener('click', removeMedia);
 	cellData[7].appendChild(removeIcon);
 
-	// console.log(name + location);
 	mediaSeq++;
 }
 
-function clearFormContent() {
-	document.getElementById('name').value = '';
-	document.getElementById('location').value = '';
-}
-
-function showVideoFrame() {
-	let ownerList = document.getElementsByClassName('ownerName');
-	let playIcon = document.createElement('i');
-	playIcon.classList.add('fa', 'fa-play');
-	let video1 = document.createElement('li');
-	let video2 = document.createElement('li');
-	let video3 = document.createElement('li');
-	video1.classList.add('movieID');
-	video2.classList.add('movieID');
-	video3.classList.add('movieID');
-	// video1.setAttribute('movieurl', 'http://html5videoformatconverter.com/data/images/happyfit2.mp4');
-	// video2.setAttribute('movieurl', 'http://grochtdreis.de/fuer-jsfiddle/video/sintel_trailer-480.mp4');
-	// video3.setAttribute('movieurl', 'http://www.ioncannon.net/examples/vp8-webm/big_buck_bunny_480p.webm');
-	video1.setAttribute('movieurl', '../../videos/feet.mp4');
-	video2.setAttribute('movieurl', '../../videos/chanel.mp4');
-	video3.setAttribute('movieurl', '../../videos/dior.mp4');
-	video1.appendChild(document.createTextNode(' Happy Fit'));
-	video2.appendChild(document.createTextNode(' Chanel'));
-	video3.appendChild(document.createTextNode(' Dior'));
-	let playList = document.getElementById('playlist');
-	playList.innerHTML = '';
-	let seqNum = this.parentNode.parentNode.firstChild.innerHTML;
-	// console.log(this.parentNode);
-	console.log(seqNum);
-	if (seqNum === '0') {
-		playList.appendChild(video1);
-		playList.appendChild(video2);
-		playList.appendChild(video3);
-	} else if (seqNum === '1') {
-		playList.appendChild(video2);
-		playList.appendChild(video3);
-	} else if (seqNum === '2') {
-		playList.appendChild(video3);
-	} else {
-		playList.appendChild(video1);
-		playList.appendChild(video2);
-		playList.appendChild(video3);
-	}
-
-	// for (let i = 0; i < ownerList.length; i++){
-	// 	if(ownerList[i].innerHTML == "")
-	// }
-	let videoContainer = document.getElementById('popVideoContainer');
-	videoContainer.style.display = 'flex';
-	let videoList = document.getElementsByClassName('movieID');
-	console.log(videoList);
-	for (let i = 0; i < videoList.length; i++) {
-		videoList[i].addEventListener('click', playVideo);
-	}
+function showVideoFrame(videoIcon) {
+	document.getElementById('popVideoContainer').style.display = 'flex';
+	document.getElementById('table_container').style.display = 'none';
+	requestVideoList(videoIcon);
 }
 
 function closeVideoFrame() {
 	document.getElementById('videoarea').pause();
 	document.getElementById('videoarea').src = '';
 	document.getElementById('popVideoContainer').style.display = 'none';
+	document.getElementById('table_container').style.display = 'flex';
+}
+function requestUserMedia() {
+	let userName = document.getElementById('userName').value;
+	let sendObj = {};
+	sendObj.userName = userName;
+	let xhr = new XMLHttpRequest();
+	xhr.responseType = 'text';
+	xhr.open('POST', '/app/data/media');
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.send(JSON.stringify(sendObj));
+	xhr.onload = updateMediaList;
 }
 
+function updateMediaList() {
+	let resMediaListObj = JSON.parse(this.responseText);
+	let resMediaList = resMediaListObj.mediaList;
+	console.log(resMediaList);
+	for (let i = 0; i < resMediaList.length; i++) {
+		addMedia(resMediaList[i]);
+	}
+}
+
+function requestVideoList(videoIcon) {
+	//console.log(videoIcon);
+	let userName = document.getElementById('userName').value;
+	let sendObj = {};
+	sendObj.userName = userName;
+	sendObj.mediaSeqNo = videoIcon.parentNode.parentNode.firstChild.innerHTML;
+	//console.log(sendObj);
+	let xhr = new XMLHttpRequest();
+	xhr.responseType = 'text';
+	xhr.open('POST', '/app/data/video');
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	//console.log(JSON.stringify(userObj));
+	xhr.send(JSON.stringify(sendObj));
+	xhr.onload = updateVideoList;
+}
+function updateVideoList() {
+	let resVideoListObj = JSON.parse(this.responseText);
+	let resVideoList = resVideoListObj.videoList;
+	//console.log(resVideoList);
+	let playList = document.getElementById('playlist');
+	playList.innerHTML = '';
+	for (let i = 0; i < resVideoList.length; i++) {
+		addVideo(resVideoList[i], playList);
+	}
+}
+function addVideo(videoName, playList) {
+	let row = playList.insertRow(-1);
+	let cellData = [];
+	for (i = 0; i < 3; i++) {
+		cellData[i] = row.insertCell(i);
+	}
+	let sortIcon = document.createElement('i');
+	sortIcon.classList.add('fa', 'fa-bars');
+	cellData[0].appendChild(sortIcon);
+	cellData[1].appendChild(document.createTextNode(videoName));
+	let playIcon = document.createElement('i');
+	playIcon.classList.add('fa', 'fa-play');
+	playIcon.setAttribute('movieurl', '/videos/' + videoName + '.mp4');
+	playIcon.addEventListener('click', playVideo);
+	cellData[2].appendChild(playIcon);
+	row.setAttribute('draggable', 'true');
+	row.addEventListener('dragstart', handleDragStart, false);
+	row.addEventListener('dragenter', handleDragEnter, false);
+	row.addEventListener('dragover', handleDragOver, false);
+	row.addEventListener('dragleave', handleDragLeave, false);
+}
+function handleDragStart(e) {
+	console.log(e.target);
+	e.target.style.opacity = '0.4'; // this / e.target is the source node.
+}
+function handleDragOver(e) {
+	if (e.preventDefault) {
+		e.preventDefault(); // Necessary. Allows us to drop.
+	}
+	e.dataTransfer.dropEffect = 'move'; // See the section on the DataTransfer object.
+	return false;
+}
+function handleDragEnter(e) {
+	// this / e.target is the current hover target.
+	e.target.classList.add('over');
+}
+function handleDragLeave(e) {
+	e.target.classList.remove('over'); // this / e.target is previous target element.
+}
+function handleDrop(e) {
+	// this / e.target is current target element.
+	if (e.stopPropagation) {
+		e.stopPropagation(); // stops the browser from redirecting.
+	}
+	// See the section on the DataTransfer object.
+	return false;
+}
+function handleDragEnd(e) {
+	// this/e.target is the source node.
+	col.classList.remove('over');
+}
 function playVideo() {
-	console.log('hi');
 	let videoArea = document.getElementById('videoarea');
 	let videoUrl = this.getAttribute('movieurl');
-	//let videoPic = this.getAttribute('moviesposter');
-	//videoArea.poster = videoPic;
 	videoArea.src = videoUrl;
 	videoArea.autoplay = 'autoplay';
 	console.log(videoUrl);
 }
-
 function removeMedia() {
 	let cell = this.parentElement;
 	let removedRow = cell.parentNode;
-	console.log(removedRow);
+	let sendObj = {};
+	sendObj.userName = document.getElementById('userName').value;
+	sendObj.seqNo = removedRow.firstChild.innerHTML;
 	removedRow.parentNode.removeChild(removedRow);
+
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			return;
+		}
+	};
+	xhr.open('POST', '/app/data/delete');
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.send(JSON.stringify(sendObj));
 }
 
 function logout() {
-	window.location.href = '../login/login.html';
+	// window.location.href = '../login/login.html';
+	let xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {
+		if (xhr.readyState == 4 && xhr.status == 200) {
+			document.open();
+			document.write(xhr.responseText);
+			document.close();
+		}
+	};
+	xhr.open('GET', '/app/data/logout');
+	xhr.send(null);
 }
