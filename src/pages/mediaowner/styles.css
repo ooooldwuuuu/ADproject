@@ -312,5 +312,5 @@ border-bottom-right-radius: 10px;
     border-radius: 10px;
 }
 .over{
-    border: 2px dashed #ffffff;
+    opacity: 0.8;
 }

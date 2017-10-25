@@ -1,5 +1,6 @@
 // Validating Empty Field
 let mediaSeq = 0;
+let dragSrcEl = null;
 function checkFieldEmpty() {
 	let userName = document.getElementById('name').value;
 	let location = document.getElementById('location').value;
@@ -126,10 +127,17 @@ function addVideo(videoName, playList) {
 	row.addEventListener('dragenter', handleDragEnter, false);
 	row.addEventListener('dragover', handleDragOver, false);
 	row.addEventListener('dragleave', handleDragLeave, false);
+	row.addEventListener('drop', handleDrop, false);
+	row.addEventListener('dragend', handleDragEnd, false);
 }
 function handleDragStart(e) {
-	console.log(e.target);
-	e.target.style.opacity = '0.4'; // this / e.target is the source node.
+	// console.log(e.target);
+	// e.target.style.opacity = '0.4'; // this / e.target is the source node.
+
+	dragSrcEl = e.target;
+	// console.log(dragSrcEl);
+	e.dataTransfer.effectAllowed = 'move';
+	e.dataTransfer.setData('text', e.target.innerHTML);
 }
 function handleDragOver(e) {
 	if (e.preventDefault) {
@@ -140,26 +148,39 @@ function handleDragOver(e) {
 }
 function handleDragEnter(e) {
 	// this / e.target is the current hover target.
-	e.target.classList.add('over');
+	e.target.parentElement.classList.add('over');
 }
 function handleDragLeave(e) {
-	e.target.classList.remove('over'); // this / e.target is previous target element.
+	e.target.parentElement.classList.remove('over'); // this / e.target is previous target element.
 }
 function handleDrop(e) {
 	// this / e.target is current target element.
 	if (e.stopPropagation) {
 		e.stopPropagation(); // stops the browser from redirecting.
 	}
+	// console.log(e.target);
+	let targetRow = e.target.parentElement;
+	if (dragSrcEl != targetRow) {
+		dragSrcEl.innerHTML = targetRow.innerHTML;
+		// console.log(targetRow);
+		targetRow.innerHTML = e.dataTransfer.getData('text');
+		// console.log(targetRow);
+		dragSrcEl.getElementsByClassName('fa-play')[0].addEventListener('click', playVideo);
+		targetRow.getElementsByClassName('fa-play')[0].addEventListener('click', playVideo);
+	}
 	// See the section on the DataTransfer object.
 	return false;
 }
 function handleDragEnd(e) {
 	// this/e.target is the source node.
-	col.classList.remove('over');
+	let arr = document.getElementsByClassName('over');
+	for(let i = 0; i < arr.length; i++){
+		arr[i].classList.remove('over');
+	}
 }
-function playVideo() {
+function playVideo(e) {
 	let videoArea = document.getElementById('videoarea');
-	let videoUrl = this.getAttribute('movieurl');
+	let videoUrl = e.target.getAttribute('movieurl');
 	videoArea.src = videoUrl;
 	videoArea.autoplay = 'autoplay';
 	console.log(videoUrl);
