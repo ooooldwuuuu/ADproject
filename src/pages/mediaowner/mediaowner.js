@@ -123,10 +123,39 @@ function addVideo(videoName, playList) {
 	cellData[2].appendChild(playIcon);
 	row.setAttribute('draggable', 'true');
 	row.addEventListener('dragstart', handleDragStart, false);
+	row.addEventListener('dragenter', handleDragEnter, false);
+	row.addEventListener('dragover', handleDragOver, false);
+	row.addEventListener('dragleave', handleDragLeave, false);
 }
 function handleDragStart(e) {
 	console.log(e.target);
 	e.target.style.opacity = '0.4'; // this / e.target is the source node.
+}
+function handleDragOver(e) {
+	if (e.preventDefault) {
+		e.preventDefault(); // Necessary. Allows us to drop.
+	}
+	e.dataTransfer.dropEffect = 'move'; // See the section on the DataTransfer object.
+	return false;
+}
+function handleDragEnter(e) {
+	// this / e.target is the current hover target.
+	e.target.classList.add('over');
+}
+function handleDragLeave(e) {
+	e.target.classList.remove('over'); // this / e.target is previous target element.
+}
+function handleDrop(e) {
+	// this / e.target is current target element.
+	if (e.stopPropagation) {
+		e.stopPropagation(); // stops the browser from redirecting.
+	}
+	// See the section on the DataTransfer object.
+	return false;
+}
+function handleDragEnd(e) {
+	// this/e.target is the source node.
+	col.classList.remove('over');
 }
 function playVideo() {
 	let videoArea = document.getElementById('videoarea');
