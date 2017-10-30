@@ -163,11 +163,35 @@ tr:nth-child(even){background-color: #f2f2f2}
     cursor:pointer;
     transform: scale(2);
 }
+.typeDiv{
+    width: 100%;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.typeDiv button{
+    width: 100%;
+    border: none;
+    background-color: #FFBC00;
+    color:white;
+    font-size: 110%;
+    font-weight: bold;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.2s ease-in-out;
+}
+.typeDiv button:hover{
+    background-color: #ffc219;
+    transform: scale(1.03);
+}
 
 .formBody{
     margin: 50px 0 20px 0;
     width: 80%;
-    display: flex;
+    display: none;
     flex-direction: column;
     justify-content: center;
     align-items: center;

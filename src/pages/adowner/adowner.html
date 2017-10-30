@@ -6,11 +6,14 @@
     <!-- <link rel="stylesheet" href="/src/pages/adowner/styles.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- <script src="/src/pages/adowner/adowner.js"></script> -->
-    <link rel="stylesheet" href="/src/pages/adowner/styles.css">
-    <script src="/src/pages/adowner/adowner.js"></script>
+    <link rel="stylesheet" href="./styles.css">
+    <script src="./adowner.js"></script>
     <title>AD Owner</title>
 </head>
 <body>
+    <div style="display:none">
+        <input type="text" id="userName" name="userName" value="${input.userName}">
+    </div>
     <!-- Popup Div Starts Here -->
     <div id="popupContainer" class="popupContainer">
         <div id="popupContact" class="popupContact">
@@ -18,21 +21,48 @@
             <div id="form" class="popForm">
                 <i id="closeBtn" onclick ="hideForm()" class="closeBtn fa fa-times-circle"></i>
                 <div class="formHead">
-                    Add media info
+                    Add AD info
                 </div>
-                <!-- <form class="formBody" action="/app/data/upload" method="post"> -->
-                <div class="formBody">
+                <div class="typeDiv" id="typeDiv">
+                    <button onclick="showPicForm()">Picture</button>
+                    <button onclick="showVideoForm()">Video</button>
+                </div>
+                <form class="formBody" id="picForm" action="/app/data/upload" method="post">
+                <!-- <div class="formBody" id="picForm"> -->
                     <label for="picture">Choose a picture</label>
                     <input id="uploadPic" name="picture" type="file">
+                    <input id="submitBtn" name="submitBtn" onclick="checkFieldEmpty()" type="button" value="Submit">
+                <!-- </div> -->
+                </form>
+                <form class="formBody" id="videoForm" action="/app/data/upload" method="post">
+                <!-- <div class="formBody" id="videoForm"> -->
                     <label for="video">Choose a video</label>
                     <input id="uploadVideo" name="video" placeholder="Choose a video" type="file">
                     <input id="submitBtn" name="submitBtn" onclick="checkFieldEmpty()" type="button" value="Submit">
-                </div>
-                <!-- </form> -->
+                <!-- </div> -->
+                </form>
             </div>
         </div>
     </div>
     <!-- Popup Div Ends Here -->
+    <div id="chooseScreen" class="popupContainer">
+        <div class="popupContact">
+            <div class="popForm">
+                <i onclick ="hideScreenForm()" class="closeBtn fa fa-times-circle"></i>
+                <div class="formHead">
+                    Choose screen
+                </div>
+                <form class="formBody" id="screenForm" action="" method="post">
+                    <label for="mediaList">Choose a midea</label>
+                    <input list="mediaList" name="mediaList">
+                    <datalist id="mediaList">
+                        <option value="test"></option>
+                    </datalist>
+                    <input id="submitBtn" name="submitBtn" onclick="checkFieldEmpty()" type="button" value="新增">
+                </form>
+            </div>
+        </div>
+    </div>
     <div class="identity_container">
         <h1>AD Owner</h1>
         <i id="logout" class="fa fa-sign-out" onclick="logout()">Log out</i>
