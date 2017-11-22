@@ -1,17 +1,49 @@
 // Validating Empty Field
-let mediaSeq = 0;
 let dragSrcEl = null;
+window.onload = () => {
+	requestUserMedia();
+};
 function checkFieldEmpty() {
-	let userName = document.getElementById('name').value;
+	let no = document.getElementById('no').value;
+	let name = document.getElementById('name').value;
 	let location = document.getElementById('location').value;
-	if (userName == '' || location == '') {
+	let sendObj = {
+		no: no,
+		name: name,
+		location: location,
+	};
+	if (no == '' || name == '' || location == '') {
 		alert('Please Fill All Fields !');
-	} else {
-		hideForm();
+		return;
+	} else if (no != '') {
+		console.log(no);
+		if (!checkNo(no)) {
+			alert('Number already be used !');
+			return;
+		}
 	}
+	let xhr = new XMLHttpRequest();
+	xhr.open('POST', '/api/screens/add/');
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.responseType = 'text';
+	xhr.onloadend = () => {
+		addMedia(sendObj);
+		hideForm();
+	};
+	xhr.send(JSON.stringify(sendObj));
+}
+function checkNo(no) {
+	let table = document.getElementById('mediaTable');
+	let screenRows = table.getElementsByClassName('screenRow');
+	for (let i = 0; i < screenRows.length; i++) {
+		if (no === screenRows[i].cells[0].innerHTML)
+			return false;
+	}
+	return true;
 }
 function showForm() {
 	document.getElementById('name').value = '';
+	document.getElementById('no').value = '';
 	document.getElementById('location').value = '';
 	document.getElementById('popupContainer').style.display = 'flex';
 }
@@ -22,17 +54,17 @@ function addMedia(mediaObj) {
 	let table = document.getElementById('mediaTable');
 	//console.log(table.firstChild.innerHTML);
 	let newTableRow = table.insertRow(-1);
+	newTableRow.classList.add('screenRow');
 	let cellData = [];
-	for (i = 0; i < 8; i++) {
+	for (let i = 0; i < 8; i++) {
 		cellData[i] = newTableRow.insertCell(i);
 	}
-	cellData[0].innerHTML = mediaObj.seqNo;
-	cellData[1].innerHTML = mediaObj.mediaName;
-	cellData[1].classList.add('ownerName');
+	cellData[0].innerHTML = mediaObj.no;
+	cellData[1].innerHTML = mediaObj.name;
 	cellData[2].innerHTML = mediaObj.location;
-	cellData[3].innerHTML = mediaObj.time;
-	cellData[4].innerHTML = mediaObj.price;
-	cellData[5].innerHTML = mediaObj.income;
+	// cellData[3].innerHTML = mediaObj.time;
+	// cellData[4].innerHTML = mediaObj.price;
+	// cellData[5].innerHTML = mediaObj.income;
 	let videoIcon = document.createElement('i');
 	videoIcon.classList.add('fa', 'fa-film');
 	videoIcon.addEventListener('click', (e) => {
@@ -45,8 +77,6 @@ function addMedia(mediaObj) {
 	removeIcon.classList.add('fa', 'fa-trash');
 	removeIcon.addEventListener('click', removeMedia);
 	cellData[7].appendChild(removeIcon);
-
-	mediaSeq++;
 }
 
 function showVideoFrame(videoIcon) {
@@ -67,18 +97,21 @@ function requestUserMedia() {
 	sendObj.userName = userName;
 	let xhr = new XMLHttpRequest();
 	xhr.responseType = 'text';
-	xhr.open('POST', '/app/data/media');
+	xhr.open('POST', '/api/screens/');
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.send(JSON.stringify(sendObj));
-	xhr.onload = updateMediaList;
+	xhr.onload = () => {
+		if (xhr.responseText === '')
+			return;
+		let screenObjArr = xhr.responseText.split('\n');
+		updateMediaList(screenObjArr);
+	};
 }
 
-function updateMediaList() {
-	let resMediaListObj = JSON.parse(this.responseText);
-	let resMediaList = resMediaListObj.mediaList;
-	console.log(resMediaList);
-	for (let i = 0; i < resMediaList.length; i++) {
-		addMedia(resMediaList[i]);
+function updateMediaList(screenObjArr) {
+	for (let i = 0; i < screenObjArr.length - 1; i++) {
+		let screenObj = JSON.parse(screenObjArr[i]);
+		addMedia(screenObj);
 	}
 }
 
@@ -174,7 +207,7 @@ function handleDrop(e) {
 function handleDragEnd(e) {
 	// this/e.target is the source node.
 	let arr = document.getElementsByClassName('over');
-	for(let i = 0; i < arr.length; i++){
+	for (let i = 0; i < arr.length; i++) {
 		arr[i].classList.remove('over');
 	}
 }
@@ -190,30 +223,22 @@ function removeMedia() {
 	let removedRow = cell.parentNode;
 	let sendObj = {};
 	sendObj.userName = document.getElementById('userName').value;
-	sendObj.seqNo = removedRow.firstChild.innerHTML;
+	sendObj.no = removedRow.firstChild.innerHTML;
+	// console.log(removedRow.firstChild);
+	sendObj.screen_name = removedRow.firstChild.nextSibling.innerHTML;
+	sendObj.location = removedRow.firstChild.nextSibling.nextSibling.innerHTML;
 	removedRow.parentNode.removeChild(removedRow);
 
 	let xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState == 4 && xhr.status == 200) {
-			return;
-		}
+	xhr.onloadend = () => {
 	};
-	xhr.open('POST', '/app/data/delete');
+	xhr.open('POST', '/api/screen/delete');
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.send(JSON.stringify(sendObj));
 }
 
 function logout() {
-	// window.location.href = '../login/login.html';
-	let xhr = new XMLHttpRequest();
-	xhr.onreadystatechange = function () {
-		if (xhr.readyState == 4 && xhr.status == 200) {
-			document.open();
-			document.write(xhr.responseText);
-			document.close();
-		}
-	};
-	xhr.open('GET', '/app/data/logout');
-	xhr.send(null);
+	let form = document.getElementById('logoutForm');
+	document.getElementById('logoutUser').value = document.getElementById('userName').value;
+	form.submit();
 }

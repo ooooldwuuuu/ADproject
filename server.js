@@ -153,6 +153,37 @@ app.get('/videos/feet.mp4', function (req, res) {
 // 	//res.end('ok');
 // 	// res.json({ status: 'ok' });
 // });
+app.post('/api/media/screens/', function(req, res) {
+	let obj = {
+		no: '1',
+		screen_name: 'R',
+		location: 'Taipei',
+	};
+	let sendStr = JSON.stringify(obj) + '\n';
+	for (let i = 0; i < 5; i++) {
+		sendStr += JSON.stringify(obj) + '\n';
+	}
+	res.send(sendStr);
+});
+app.post('/app/data/upload/video', function(req, res) {
+	console.log(req.body);
+	let form = new multiparty.Form();
+
+	form.parse(req, function(err, fields, files) {
+		Object.keys(fields).forEach(function(name) {
+			console.log('got field named ' + name);
+		});
+		console.log(fields);
+
+		Object.keys(files).forEach(function(name) {
+			console.log('got file named ' + name);
+		});
+		console.log(files);
+		console.log('Upload completed!');
+		res.writeHead(200, {'content-type': 'text/plain'});
+		res.end('Received ' + files.length + ' files');
+	});
+});
 
 app.get('/upload', function(req, res) {
 	res.sendFile('src/pages/testUpload/index.html', {root: __dirname });

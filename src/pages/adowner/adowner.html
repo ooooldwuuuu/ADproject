@@ -6,13 +6,13 @@
     <!-- <link rel="stylesheet" href="/src/pages/adowner/styles.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- <script src="/src/pages/adowner/adowner.js"></script> -->
-    <link rel="stylesheet" href="./styles.css">
-    <script src="./adowner.js"></script>
+    <link rel="stylesheet" href="/src/pages/adowner/styles.css">
+    <script src="/src/pages/adowner/adowner.js"></script>
     <title>AD Owner</title>
 </head>
 <body>
-    <div style="display:none">
-        <input type="text" id="userName" name="userName" value="${input.userName}">
+    <div style="display: hidden">
+        <input id="userName" type="hidden" value="${input.user_id}">
     </div>
     <!-- Popup Div Starts Here -->
     <div id="popupContainer" class="popupContainer">
@@ -23,29 +23,30 @@
                 <div class="formHead">
                     Add AD info
                 </div>
-                <div class="typeDiv" id="typeDiv">
+                <!-- <div class="typeDiv" id="typeDiv">
                     <button onclick="showPicForm()">Picture</button>
                     <button onclick="showVideoForm()">Video</button>
-                </div>
-                <form class="formBody" id="picForm" action="/app/data/upload" method="post">
-                <!-- <div class="formBody" id="picForm"> -->
+                </div> -->
+                <!-- <form class="formBody" id="picForm" action="/app/data/upload/pic" method="post" enctype="multipart/form-data">
                     <label for="picture">Choose a picture</label>
                     <input id="uploadPic" name="picture" type="file">
                     <input id="submitBtn" name="submitBtn" onclick="checkFieldEmpty()" type="button" value="Submit">
-                <!-- </div> -->
-                </form>
-                <form class="formBody" id="videoForm" action="/app/data/upload" method="post">
-                <!-- <div class="formBody" id="videoForm"> -->
+                </form> -->
+                <form class="formBody" id="videoForm" action="/app/data/upload/video" method="post" enctype="multipart/form-data">
                     <label for="video">Choose a video</label>
                     <input id="uploadVideo" name="video" placeholder="Choose a video" type="file">
+                    <label for="screenList">Choose a midea</label>
+                    <input id="choose" list="screenList" name="screenList">
+                    <datalist id="screenList">
+                        <option value="test"></option>
+                    </datalist>
                     <input id="submitBtn" name="submitBtn" onclick="checkFieldEmpty()" type="button" value="Submit">
-                <!-- </div> -->
                 </form>
             </div>
         </div>
     </div>
     <!-- Popup Div Ends Here -->
-    <div id="chooseScreen" class="popupContainer">
+    <!-- <div id="chooseScreen" class="popupContainer">
         <div class="popupContact">
             <div class="popForm">
                 <i onclick ="hideScreenForm()" class="closeBtn fa fa-times-circle"></i>
@@ -62,7 +63,7 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="identity_container">
         <h1>AD Owner</h1>
         <i id="logout" class="fa fa-sign-out" onclick="logout()">Log out</i>
@@ -70,8 +71,6 @@
     <div class="table_container">
         <table id="mediaTable">
             <tr>
-                <th>編號</th>
-                <th>圖示</th>
                 <th>名稱</th>
                 <th>片長</th>
                 <th>點位</th>
@@ -98,4 +97,7 @@
     </div>
     <!-- Popup video end here -->
 </body>
+<script>
+    // requestUserAD();
+</script>
 </html>
