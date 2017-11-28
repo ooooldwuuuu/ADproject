@@ -1,35 +1,36 @@
 // Validating Empty Field
 let mediaSeq = 0;
+let screenMap = new Map();
 window.onload = () =>{
-	// requestADList();
+	requestADList();
 };
 function requestADList() {
-	let sendObj = {};
-	sendObj.userName = document.getElementById('userName').value;
+	let sendObj = {
+		userName: document.getElementById('userName').value,
+	};
 	let xhr = new XMLHttpRequest();
 	xhr.open('POST', '/api/medias/');
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.send(JSON.stringify(sendObj));
 	xhr.onload = () => {
-		prodADList(xhr.responseText.split('\n'));
+		mediaObjArr = xhr.responseText.split('\n');
+		mediaObjArr.pop();
+		mediaObjArr.forEach((e) => {
+			let mediaObj = JSON.parse(e);
+			addMedia(mediaObj);
+		});
 	};
 }
-function prodADList(mediaObjArr) {
-	for (let i = 0; i < mediaObjArr.length - 1; i++) {
-		let mediaObj = JSON.parse(mediaObjArr[i]);
-		addMedia(mediaObj);
-	}
-}
 function addMedia(mediaObj) {
-	let location = mediaObj.location;
-	let fileName = mediaObj.media_name;
 	let url = mediaObj.url;
+	let media_name = mediaObj.media_name;
 	let table = document.getElementById('mediaTable');
 	let newTableRow = table.insertRow(-1);
 	let cellData = [];
 	for (let i = 0; i < 6; i++) {
 		cellData[i] = newTableRow.insertCell(i);
 	}
+	cellData[0].innerText = media_name;
 	let locate = document.createElement('span');
 	locate.classList.add('locateBtn');
 	locate.addEventListener('click', chooseLocate);
@@ -46,6 +47,9 @@ function addMedia(mediaObj) {
 	removeIcon.classList.add('fa', 'fa-trash');
 	removeIcon.addEventListener('click', removeAD);
 	cellData[5].appendChild(removeIcon);
+}
+function chooseLocate() {
+
 }
 function checkFieldEmpty() {
 	// let pic = document.getElementById('uploadPic').value;
@@ -69,13 +73,17 @@ function uploadFile() {
 	// console.log(file);
 	let fd = new FormData();
 	let xhr = new XMLHttpRequest();
-	xhr.open('POST', '/app/data/upload/video');
+	xhr.open('POST', '/api/media/upload');
+	// xhr.setRequestHeader('Content-type', 'application/json');
 	xhr.onloadend = () => {
 		requestADList();
 	};
-	fd.append('no', screenNo);
-	fd.append('media_name', filename);
-	fd.append('media', file);
+	let sendObj = {
+		no: screenNo,
+		media_name: filename,
+	};
+	fd.append('field', JSON.stringify(sendObj));
+	fd.append('file', file);
 	xhr.send(fd);
 }
 //Function To Display Popup
@@ -87,25 +95,25 @@ function showForm() {
 }
 function requestScreenList() {
 	let xhr = new XMLHttpRequest();
-	xhr.open('POST', '/api/media/screens/');
+	xhr.open('POST', '/api/screens');
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.responseType = 'text';
 	xhr.onloadend = () => {
 		let screenObjArr = xhr.responseText.split('\n');
-		updateScreenList(screenObjArr);
+		screenObjArr.pop();
+		let screenList = document.getElementById('screenList');
+		screenList.innerHTML = '';
+		screenObjArr.forEach((e) => {
+			let screenObj = JSON.parse(e);
+			let option = document.createElement('option');
+			option.setAttribute('value', screenObj.no + ' ' + screenObj.screen_name + ' ' + screenObj.location);
+			option.innerText = screenObj.no + '\t' + screenObj.screen_name + '\t' + screenObj.location;
+			screenList.appendChild(option);
+			screenMap.set(screenObj.no, screenObj);
+		});
 	};
+	console.log(screenMap);
 	xhr.send();
-}
-function updateScreenList(screenObjArr) {
-	let screenList = document.getElementById('screenList');
-	console.log(screenObjArr);
-	screenList.innerHTML = '';
-	for (let i = 0; i < screenObjArr.length - 1; i++) {
-		let option = document.createElement('option');
-		let screenObj = JSON.parse(screenObjArr[i]);
-		option.setAttribute('value', screenObj.no + ' ' + screenObj.screen_name + ' ' + screenObj.location);
-		screenList.appendChild(option);
-	}
 }
 //Function to Hide Popup
 function hideForm() {

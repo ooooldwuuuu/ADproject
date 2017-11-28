@@ -28,39 +28,6 @@ app.post('/api/data/', (req, res, next)=>{
 	//res.end('ok');
 	res.json({ status: 'ok' });
 });
-app.get('/api/data/:year', (req, res, next)=>{
-	console.log(req.params);
-	//res.end('ok');
-	res.json({
-		'holiday':{ '10': ['01', '07', '08', '14', '15', '21', '22', '28', '29'],
-					'11': ['04', '05', '11', '12', '18', '19', '25', '26'],
-					'12': ['02', '03', '09', '10', '16', '17', '23', '24', '30', '31'],
-					'01': ['01', '02', '07', '08', '14', '15', '21', '22', '28', '29'],
-					'02': ['04', '05', '11', '12', '18', '19', '25', '26'],
-					'03': ['04', '05', '11', '12', '18', '19', '25', '26'],
-					'04': ['01', '02', '08', '09', '15', '16', '22', '23', '29', '30'],
-					'05': ['06', '07', '13', '14', '20', '21', '27', '28'],
-					'06': ['03', '04', '10', '11', '17', '18', '24', '25'],
-					'07': ['01', '02', '08', '09', '15', '16', '22', '23', '29', '30'],
-					'08': ['05', '06', '12', '13', '19', '20', '26', '27'],
-					'09': ['02', '03', '09', '10', '16', '17', '23', '24', '30']},
-		'notrade':{ '02':['8', '9', '10']},
-	});
-	// res.json({ '10': [ '01', '07', '08', '14', '15', '21', '22', '28', '29' ],
-	// '11': [ '04', '05', '11', '12', '18', '19', '25', '26' ],
-	// '12': [ '02', '03', '09', '10', '16', '17', '23', '24', '30', '31' ],
-	// '01': [ '01', '02', '07', '08', '14', '15', '21', '22', '28', '29' ],
-	// '02': [ '04', '05', '11', '12', '18', '19', '25', '26' ],
-	// '03': [ '04', '05', '11', '12', '18', '19', '25', '26' ],
-	// '04': [ '01', '02', '08', '09', '15', '16', '22', '23', '29', '30' ],
-	// '05': [ '06', '07', '13', '14', '20', '21', '27', '28' ],
-	// '06': [ '03', '04', '10', '11', '17', '18', '24', '25' ],
-	// '07': [ '01', '02', '08', '09', '15', '16', '22', '23', '29', '30' ],
-	// '08': [ '05', '06', '12', '13', '19', '20', '26', '27' ],
-	// '09': [ '02', '03', '09', '10', '16', '17', '23', '24', '30' ] });
-});
-
-
 app.get('/login', function(req, res) {
 	res.sendFile('src/pages/login/login.html', {root: __dirname });
 });
@@ -144,8 +111,13 @@ app.get('/app/data/logout', function (req, res) {
 	res.sendFile('src/pages/login/login.html', {root: __dirname });
 });
 app.get('/videos/feet.mp4', function (req, res) {
-	console.log('video');
 	res.sendFile('src/videos/feet.mp4', {root: __dirname });
+});
+app.get('/videos/dior.mp4', function (req, res) {
+	res.sendFile('src/videos/dior.mp4', {root: __dirname });
+});
+app.get('/videos/chanel.mp4', function (req, res) {
+	res.sendFile('src/videos/chanel.mp4', {root: __dirname });
 });
 // app.post('/app/data/upload', (req, res, next)=>{
 // 	console.log(req.body);
@@ -153,20 +125,40 @@ app.get('/videos/feet.mp4', function (req, res) {
 // 	//res.end('ok');
 // 	// res.json({ status: 'ok' });
 // });
-app.post('/api/media/screens/', function(req, res) {
+app.post('/api/screens', function(req, res) {
 	let obj = {
-		no: '1',
-		screen_name: 'R',
-		location: 'Taipei',
+		no: '',
+		screen_name: '',
+		location: '',
 	};
-	let sendStr = JSON.stringify(obj) + '\n';
+	let name = ['Sony', 'LG', 'Sharp'];
+	let spot = ['Pingtung', 'Kaohsiung', 'Taipei'];
+	let sendStr = '';
 	for (let i = 0; i < 5; i++) {
-		sendStr += JSON.stringify(obj) + '\n';
+		obj.no = i.toString();
+		obj.screen_name = name[i % 3];
+		obj.location = spot[i % 3];
+		sendStr = sendStr + JSON.stringify(obj) + '\n';
 	}
 	res.send(sendStr);
 });
-app.post('/app/data/upload/video', function(req, res) {
-	console.log(req.body);
+app.post('/api/medias/', function(req, res) {
+	let sendObj = {
+		url: '',
+		media_name: '',
+	};
+	let url = ['/videos/feet.mp4', '/videos/dior.mp4', '/videos/chanel.mp4'];
+	let name = ['feet', 'Dior', 'Chanel'];
+	let sendStr = '';
+	for (let i = 0; i < 5; i++) {
+		sendObj.media_name = name[i % 3];
+		sendObj.url = url[i % 3];
+		sendStr = sendStr + JSON.stringify(sendObj) + '\n';
+	}
+	res.send(sendStr);
+});
+app.post('/api/media/upload', function(req, res) {
+	// console.log(req.body);
 	let form = new multiparty.Form();
 
 	form.parse(req, function(err, fields, files) {
@@ -190,24 +182,6 @@ app.get('/upload', function(req, res) {
 });
 app.get('/upload.js', function(req, res) {
 	res.sendFile('src/pages/testUpload/upload.js', {root: __dirname });
-});
-app.post('/app/data/upload', function(req, res) {
-	console.log(req.body);
-	let form = new multiparty.Form();
-
-	form.parse(req, function(err, fields, files) {
-		Object.keys(fields).forEach(function(name) {
-			console.log('got field named ' + name);
-		});
-
-		Object.keys(files).forEach(function(name) {
-			console.log('got file named ' + name);
-		});
-		console.log(files);
-		console.log('Upload completed!');
-		res.writeHead(200, {'content-type': 'text/plain'});
-		res.end('Received ' + files.length + ' files');
-	});
 });
 
 app.listen(8080, function() {
