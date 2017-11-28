@@ -1,7 +1,7 @@
 // Validating Empty Field
 let dragSrcEl = null;
 window.onload = () => {
-	requestUserMedia();
+	requestUserScreen();
 };
 function checkFieldEmpty() {
 	let no = document.getElementById('no').value;
@@ -23,7 +23,7 @@ function checkFieldEmpty() {
 		}
 	}
 	let xhr = new XMLHttpRequest();
-	xhr.open('POST', '/api/screens/add/');
+	xhr.open('POST', '/api/screen/new');
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.responseType = 'text';
 	xhr.onloadend = () => {
@@ -50,7 +50,7 @@ function showForm() {
 function hideForm() {
 	document.getElementById('popupContainer').style.display = 'none';
 }
-function addMedia(mediaObj) {
+function addMedia(screenObj) {
 	let table = document.getElementById('mediaTable');
 	//console.log(table.firstChild.innerHTML);
 	let newTableRow = table.insertRow(-1);
@@ -59,12 +59,12 @@ function addMedia(mediaObj) {
 	for (let i = 0; i < 8; i++) {
 		cellData[i] = newTableRow.insertCell(i);
 	}
-	cellData[0].innerHTML = mediaObj.no;
-	cellData[1].innerHTML = mediaObj.name;
-	cellData[2].innerHTML = mediaObj.location;
-	// cellData[3].innerHTML = mediaObj.time;
-	// cellData[4].innerHTML = mediaObj.price;
-	// cellData[5].innerHTML = mediaObj.income;
+	cellData[0].innerHTML = screenObj.no;
+	cellData[1].innerHTML = screenObj.screen_name;
+	cellData[2].innerHTML = screenObj.location;
+	// cellData[3].innerHTML = screenObj.time;
+	// cellData[4].innerHTML = screenObj.price;
+	// cellData[5].innerHTML = screenObj.income;
 	let videoIcon = document.createElement('i');
 	videoIcon.classList.add('fa', 'fa-film');
 	videoIcon.addEventListener('click', (e) => {
@@ -91,30 +91,26 @@ function closeVideoFrame() {
 	document.getElementById('popVideoContainer').style.display = 'none';
 	document.getElementById('table_container').style.display = 'flex';
 }
-function requestUserMedia() {
+function requestUserScreen() {
 	let userName = document.getElementById('userName').value;
 	let sendObj = {};
 	sendObj.userName = userName;
 	let xhr = new XMLHttpRequest();
 	xhr.responseType = 'text';
-	xhr.open('POST', '/api/screens/');
+	xhr.open('POST', '/api/screens');
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	xhr.send(JSON.stringify(sendObj));
 	xhr.onload = () => {
 		if (xhr.responseText === '')
 			return;
 		let screenObjArr = xhr.responseText.split('\n');
-		updateMediaList(screenObjArr);
+		screenObjArr.pop();
+		screenObjArr.forEach((e) => {
+			let screenObj = JSON.parse(e);
+			addMedia(screenObj);
+		});
 	};
 }
-
-function updateMediaList(screenObjArr) {
-	for (let i = 0; i < screenObjArr.length - 1; i++) {
-		let screenObj = JSON.parse(screenObjArr[i]);
-		addMedia(screenObj);
-	}
-}
-
 function requestVideoList(videoIcon) {
 	//console.log(videoIcon);
 	let userName = document.getElementById('userName').value;
@@ -124,7 +120,7 @@ function requestVideoList(videoIcon) {
 	//console.log(sendObj);
 	let xhr = new XMLHttpRequest();
 	xhr.responseType = 'text';
-	xhr.open('POST', '/app/data/video');
+	xhr.open('POST', '/api/screen/videos');
 	xhr.setRequestHeader('Content-Type', 'application/json');
 	//console.log(JSON.stringify(userObj));
 	xhr.send(JSON.stringify(sendObj));

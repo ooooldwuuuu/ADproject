@@ -73,7 +73,7 @@ function uploadFile() {
 	// console.log(file);
 	let fd = new FormData();
 	let xhr = new XMLHttpRequest();
-	xhr.open('POST', '/api/media/upload');
+	xhr.open('POST', '/api/media/new');
 	// xhr.setRequestHeader('Content-type', 'application/json');
 	xhr.onloadend = () => {
 		requestADList();

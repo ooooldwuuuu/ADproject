@@ -96,7 +96,7 @@ app.post('/app/data/media', function (req, res) {
 		],
 	});
 });
-app.post('/app/data/video', function (req, res) {
+app.post('/api/screen/videos', function (req, res) {
 	console.log(req.body);
 	res.json({
 		'videoList': ['Dior', 'Chanel', 'feet'],
@@ -157,7 +157,7 @@ app.post('/api/medias/', function(req, res) {
 	}
 	res.send(sendStr);
 });
-app.post('/api/media/upload', function(req, res) {
+app.post('/api/media/new', function(req, res) {
 	// console.log(req.body);
 	let form = new multiparty.Form();
 
